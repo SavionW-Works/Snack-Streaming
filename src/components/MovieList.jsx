@@ -3,12 +3,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBox from "./Searchbox";
+import AddItem from "./AddItem";
+
 //import { Link } from "react-router-dom";
 //import { useParams } from "react-router-dom";
 
 import "../App.css";
-import env from "react-dotenv";
 import { Container, Row, Col } from "react-bootstrap";
+
+import MovieIcon from "./MovieIcon";
 
 const MovieList = () => {
   const [loading, setLoading] = useState(false);
@@ -18,8 +21,8 @@ const MovieList = () => {
 
   const fetchAPIData = async (searchValue) => {
     setLoading(true);
-
-    const URL = `http://www.omdbapi.com/?s=toy+story&apikey=${env.REACT_APP_API_KEY}&`;
+    const API_KEY = import.meta.env.VITE_APP_API_KEY; //How to use .env with Vite
+    const URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
 
     try {
       const response = await axios.get(URL);
@@ -27,8 +30,6 @@ const MovieList = () => {
         //If a valid response is received (added due to SearchBar)
         setMovieData(response.data.Search); //Ombd searches must be extracted with .s
       }
-
-      console.log(JSON.stringify(response));
     } catch (e) {
       setError("Error: " + e.message);
     } finally {
@@ -40,9 +41,6 @@ const MovieList = () => {
     // if (responseJson.Search) {
     //   setMovies(responseJson.Search);
     // }
-
-    console.log(movieData);
-    console.log(movieData);
   };
 
   useEffect(() => {
@@ -53,27 +51,12 @@ const MovieList = () => {
     <>
       <div className="ms-auto d-flex align-items-center">
         <h1>Movies</h1>
-
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
 
       <Container className="fluid movie-app">
         <Row className="">
-          {movieData.map((movie) => {
-            return (
-              <>
-                <Container>
-                  <Col
-                    className="d-flex justify-content-start  m-3"
-                    key={movie.imdbID}
-                  >
-                    <img src={movie.Poster} alt="Movie Poster"></img>
-                  </Col>
-                  <h3 className="text-center fw-bolder">{movie.Title}</h3>
-                </Container>
-              </>
-            );
-          })}
+          <MovieIcon movies={movieData} favoriteComponent={AddItem}></MovieIcon>
         </Row>
       </Container>
     </>
