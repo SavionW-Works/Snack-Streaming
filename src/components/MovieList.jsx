@@ -16,6 +16,8 @@ import MovieIcon from "./MovieIcon";
 const MovieList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [cartItems, setCartItems] = useState([]); //Limit to 10
   const [movieData, setMovieData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
@@ -47,18 +49,52 @@ const MovieList = () => {
     fetchAPIData(searchValue);
   }, [searchValue]); //When any values in the useEffect change, useEffect is called again
 
+  const addNewItem = (movie) => {
+    // const newListing = {};
+    // newListing[movie.Title] = movie; //Gives each movie object a name equal to its title
+    const newCartList = [...cartItems, movie]; //Adds movie parameter to a copy of cartItems
+    setCartItems(newCartList);
+    //console.log(cartItems);
+  };
+
   return (
     <>
-      <div className="ms-auto d-flex align-items-center">
-        <h1>Movies</h1>
-        <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
+      <div className="py-3">
+        <div className="ms-auto d-flex align-items-center">
+          <h1>Movies</h1>
+          <SearchBox
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
+        </div>
+
+        <Container className="fluid movie-app">
+          <Row className="">
+            <MovieIcon
+              movies={movieData}
+              handleItemsClick={addNewItem}
+              itemComponent={AddItem}
+            ></MovieIcon>
+          </Row>
+        </Container>
       </div>
 
-      <Container className="fluid movie-app">
-        <Row className="">
-          <MovieIcon movies={movieData} favoriteComponent={AddItem}></MovieIcon>
-        </Row>
-      </Container>
+      <div className="py-3">
+        <div className="ms-auto d-flex align-items-center">
+          <h2>
+            Cart ({cartItems.length}/{10})
+          </h2>
+        </div>
+        <Container className="fluid movie-app">
+          <Row className="">
+            <MovieIcon
+              movies={cartItems}
+              handleItemsClick={addNewItem}
+              itemComponent={AddItem}
+            ></MovieIcon>
+          </Row>
+        </Container>
+      </div>
     </>
   );
 };

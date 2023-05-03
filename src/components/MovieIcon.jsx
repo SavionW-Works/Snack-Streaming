@@ -11,7 +11,10 @@ const MovieIcon = (props) => {
             key={movie.imdbID}
           >
             <img src={movie.Poster} alt="Movie Poster"></img>
-            <div className="overlay d-flex align-items-center justify-content-center">
+            <div
+              onClick={() => props.handleItemsClick(movie)}
+              className="overlay d-flex align-items-center justify-content-center"
+            >
               <AddItem />
             </div>
           </Col>
