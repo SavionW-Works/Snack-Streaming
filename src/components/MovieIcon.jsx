@@ -2,6 +2,7 @@ import React from "react";
 import AddItem from "./AddItem";
 import { Container, Row, Col } from "react-bootstrap";
 const MovieIcon = (props) => {
+  const ItemComponent = props.itemComponent;
   return (
     <>
       {props.movies.map((movie, index) => (
@@ -15,10 +16,15 @@ const MovieIcon = (props) => {
               onClick={() => props.handleItemsClick(movie)}
               className="overlay d-flex align-items-center justify-content-center"
             >
-              <AddItem />
+              <ItemComponent />
             </div>
           </Col>
-          <h3 className="text-center fw-bolder">{movie.Title}</h3>
+          <div className="text-center">
+            <h3 className="fw-bolder">
+              {movie.Title} ({movie.Year})
+            </h3>
+            <h4 className="fw-bolder text-warning">{movie.Genres}</h4>
+          </div>
         </Container>
       ))}
     </>
