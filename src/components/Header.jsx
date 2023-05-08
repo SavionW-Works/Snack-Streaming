@@ -85,6 +85,17 @@ const Header = () => {
                   </RouterLink>
                 </h3>
               </li>
+
+              <li className="nav-link">
+                <h3 className="navs">
+                  <RouterLink
+                    className={`${getClassName("/checkout")} display-4`}
+                    to="/checkout"
+                  >
+                    Checkout
+                  </RouterLink>
+                </h3>
+              </li>
             </ul>
           </div>
         </div>

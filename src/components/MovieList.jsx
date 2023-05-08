@@ -5,9 +5,7 @@ import axios from "axios";
 import SearchBox from "./Searchbox";
 import AddItem from "./AddItem";
 import RemoveItem from "./RemoveItem";
-
-//import { Link } from "react-router-dom";
-//import { useParams } from "react-router-dom";
+import cartData from "../data/cartData";
 
 import "../App.css";
 import { Container, Row, Col } from "react-bootstrap";
@@ -18,7 +16,7 @@ const MovieList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [cartItems, setCartItems] = useState([]); //Limit to 10
+  const [cartItems, setCartItems] = useState(cartData); //Limit to 10
   const [movieData, setMovieData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [newSearch, setNewSearch] = useState("");
@@ -49,6 +47,8 @@ const MovieList = () => {
 
     const URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
 
+    //Possibly filter video games and individual episodes from api calls
+
     try {
       const response = await axios.get(URL);
       if (JSON.stringify(response.data.Search)) {
@@ -74,12 +74,19 @@ const MovieList = () => {
     fetchAPIData(searchValue);
   }, [newSearch]); //When any values in the useEffect change, useEffect is called again
 
+  useEffect(() => {
+    const newCartData = cartItems.map((item) => ({ ...item }));
+    Object.assign(cartData, newCartData);
+  }, [cartItems]);
+
   //Smaller Functions
   const addNewItem = (movie) => {
+    if (cartItems.length < 10) {
+      const newCartList = [...cartItems, movie]; //Adds movie parameter to a copy of cartItems
+      setCartItems(newCartList);
+    }
     // const newListing = {};
     // newListing[movie.Title] = movie; //Gives each movie object a name equal to its title
-    const newCartList = [...cartItems, movie]; //Adds movie parameter to a copy of cartItems
-    setCartItems(newCartList);
   };
 
   const removeNewItem = (movie) => {
@@ -133,7 +140,18 @@ const MovieList = () => {
       <div className="py-3">
         <div className="ms-auto d-flex align-items-center">
           <h2>
-            Cart ({cartItems.length}/{10})
+            Cart (
+            {cartItems.length == 10 && (
+              <span className="text-warning fw-bold">
+                {cartItems.length}/{10}
+              </span>
+            )}
+            {cartItems.length < 10 && (
+              <>
+                {cartItems.length}/{10}
+              </>
+            )}
+            )
           </h2>
         </div>
         <Container className="fluid movie-app">

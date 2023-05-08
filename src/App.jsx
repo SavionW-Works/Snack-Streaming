@@ -1,4 +1,5 @@
-import React from "react";
+import { React, useContext } from "react";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import Signup from "./components/Signup";
 import { Container } from "react-bootstrap";
@@ -12,6 +13,7 @@ import UpdateProfile from "./components/UpdateProfile";
 import Homepage from "./components/Homepage";
 import MovieList from "./components/MovieList";
 import Header from "./components/Header";
+import Checkout from "./components/Checkout";
 
 /*               <PrivateRoute path="/update-profile" element={UpdateProfile} />
  */
@@ -46,6 +48,7 @@ function App() {
                 <Route path="/movies" element={<MovieList />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/checkout" element={<Checkout />} />
               </Routes>
             </AuthProvider>
           </Router>

@@ -15,12 +15,17 @@ const MovieIcon = (props) => {
               alt="Movie Poster"
               className="justify-content-start"
             />
-            <div
-              onClick={() => props.handleItemsClick(movie)}
-              className="overlay d-flex align-items-center justify-content-center"
-            >
-              <ItemComponent />
-            </div>
+
+            {/* Renders the overlay only if it was provided (needed for Checkout) */}
+            {ItemComponent && (
+              <div
+                onClick={() => props.handleItemsClick(movie)}
+                className="overlay d-flex align-items-center justify-content-center"
+              >
+                {/* Renders the ItemComponent only if it was provided (needed for Checkout) */}
+                {ItemComponent && <ItemComponent />}
+              </div>
+            )}
           </Col>
 
           <Col className="justify-content-start m-3 mt-5">
