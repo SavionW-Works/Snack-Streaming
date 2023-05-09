@@ -96,10 +96,12 @@ const Checkout = () => {
 
       <div>
         <Container className="justify-content-center">
-          <p className="display-3">Total: ${price} </p>
+          <p className="display-3">
+            Total: <span className="text-warning">${price.toFixed(2)}</span>{" "}
+          </p>
 
           <p className="display-3">Your favorite genres are: </p>
-          <ul>
+          <ul className="text-warning">
             {favoriteGenres.map((genre) => (
               <>
                 <span key={genre} className="display-4">

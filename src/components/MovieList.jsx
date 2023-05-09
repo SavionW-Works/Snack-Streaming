@@ -20,11 +20,12 @@ const MovieList = () => {
   const [movieData, setMovieData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [newSearch, setNewSearch] = useState("");
+  const [page_num, setPageNum] = useState(1);
   const API_KEY = import.meta.env.VITE_APP_API_KEY; //How to use .env with Vite
 
   const fetchGenreData = async (id) => {
     //How to use .env with Vite
-    const URL = `http://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`; //Retrieve By ID
+    const URL = `http://www.omdbapi.com/?i=${id}&type=movie&page=${page_num}&apikey=${API_KEY}`; //Retrieve By ID
     var hold = [];
     try {
       const response = await axios.get(URL);
@@ -45,7 +46,7 @@ const MovieList = () => {
   const fetchAPIData = async (searchValue) => {
     setLoading(true);
 
-    const URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`;
+    const URL = `http://www.omdbapi.com/?s=${searchValue}&type=movie&page=${page_num}&apikey=${API_KEY}`;
 
     //Possibly filter video games and individual episodes from api calls
 
@@ -72,7 +73,7 @@ const MovieList = () => {
 
   useEffect(() => {
     fetchAPIData(searchValue);
-  }, [newSearch]); //When any values in the useEffect change, useEffect is called again
+  }, [newSearch, page_num]); //When any values in the useEffect change, useEffect is called again
 
   useEffect(() => {
     const newCartData = cartItems.map((item) => ({ ...item }));
@@ -105,6 +106,14 @@ const MovieList = () => {
       (item) => item.imdbID !== movie.imdbID
     ); //Removes movies that match a specified id a copy of cartItems
     setCartItems(newCartList);
+  };
+
+  //Advances page given needed params
+  const pageChange = (page_num, direction) => {
+    if ((direction == -1 && page_num > 1) || direction == 1) {
+      var copy = page_num;
+      setPageNum(copy + direction);
+    }
   };
 
   return (
@@ -141,7 +150,35 @@ const MovieList = () => {
                 <h3 className="display-3 fw-bolder text-center p-6">LOADING</h3>
               </div>
             )}
+
+            {!searchValue && (
+              <div>
+                <h3 className="display-3 fw-bolder text-center p-6 justify-content-center">
+                  Type in a Movie to Search!
+                </h3>
+              </div>
+            )}
           </Row>
+          {!loading && searchValue && (
+            <Row className="p-5 justify-content-center">
+              <button
+                type="button"
+                class="btn btn-warning"
+                onClick={() => pageChange(page_num, -1)}
+              >
+                <span className="display-4">Back</span>
+              </button>
+              <h4 className="display-2 mx-5 text-warning">Page: {page_num}</h4>
+              <button
+                type="button"
+                class="btn btn-warning"
+                onClick={() => pageChange(page_num, 1)}
+              >
+                {" "}
+                <span className="display-4">Next</span>
+              </button>
+            </Row>
+          )}
         </Container>
       </div>
 
