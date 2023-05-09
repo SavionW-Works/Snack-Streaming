@@ -80,13 +80,22 @@ const MovieList = () => {
   }, [cartItems]);
 
   //Smaller Functions
+
   const addNewItem = (movie) => {
-    if (cartItems.length < 10) {
-      const newCartList = [...cartItems, movie]; //Adds movie parameter to a copy of cartItems
-      setCartItems(newCartList);
+    //Checks if cart is at capacity
+    if (cartItems.length == 10) {
+      return;
     }
-    // const newListing = {};
-    // newListing[movie.Title] = movie; //Gives each movie object a name equal to its title
+
+    //Prevents duplicate movies from being added
+    for (var i in cartItems) {
+      if (movie === cartItems[i]) {
+        return;
+      }
+    }
+
+    const newCartList = [...cartItems, movie]; //Adds movie parameter to a copy of cartItems
+    setCartItems(newCartList); //Updates cartList
   };
 
   const removeNewItem = (movie) => {
