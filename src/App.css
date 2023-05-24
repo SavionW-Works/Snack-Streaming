@@ -54,6 +54,8 @@ body {
 .image-container {
   position: relative;
   transition: transform 0.2s;
+  margin: 0;
+  padding: 0;
 }
 
 .image-container:hover {

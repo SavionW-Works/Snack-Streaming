@@ -120,11 +120,14 @@ const MovieList = () => {
     <>
       <div className="py-3">
         <div className="ms-auto d-flex align-items-center">
-          <h1>Movies</h1>
-          <SearchBox
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
+          <h1>Browse:</h1>
+          <div className="mx-3">
+            <SearchBox
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+            />
+          </div>
+
           <button
             type="button"
             className="btn btn-primary mt-4"
@@ -136,7 +139,7 @@ const MovieList = () => {
 
         {/* Movie Search */}
         <Container className="fluid movie-app">
-          <Row className="">
+          <Row className="row align-items-start m-0 p-0">
             {!loading && (
               <MovieIcon
                 movies={movieData}
@@ -161,22 +164,36 @@ const MovieList = () => {
           </Row>
           {!loading && searchValue && (
             <Row className="p-5 justify-content-center">
-              <button
-                type="button"
-                class="btn btn-warning"
-                onClick={() => pageChange(page_num, -1)}
-              >
-                <span className="display-4">Back</span>
-              </button>
-              <h4 className="display-2 mx-5 text-warning">Page: {page_num}</h4>
-              <button
-                type="button"
-                class="btn btn-warning"
-                onClick={() => pageChange(page_num, 1)}
-              >
-                {" "}
-                <span className="display-4">Next</span>
-              </button>
+              <div className="container text-center">
+                <Row className="row align-items-start">
+                  <div className="col">
+                    <button
+                      type="button"
+                      className="btn btn-warning"
+                      onClick={() => pageChange(page_num, -1)}
+                    >
+                      <span className="display-4">Back</span>
+                    </button>
+                  </div>
+
+                  <div className="col">
+                    <h4 className="display-2  text-warning">
+                      Page: {page_num}
+                    </h4>
+                  </div>
+
+                  <div className="col">
+                    <button
+                      type="button"
+                      className="btn btn-warning"
+                      onClick={() => pageChange(page_num, 1)}
+                    >
+                      {" "}
+                      <span className="display-4">Next</span>
+                    </button>
+                  </div>
+                </Row>
+              </div>
             </Row>
           )}
         </Container>

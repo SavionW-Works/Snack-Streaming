@@ -64,7 +64,9 @@ const Checkout = () => {
       <Container className="justify-content-center">
         <Row>
           <Col className="col text-center">
-            <p className="display-1 text-warning fw-bold">Checkout</p>
+            <p className="display-1 text-warning fw-bold text-decoration-underline">
+              Checkout
+            </p>
           </Col>
         </Row>
       </Container>

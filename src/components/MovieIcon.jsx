@@ -5,16 +5,12 @@ const MovieIcon = (props) => {
   return (
     <>
       {props.movies.map((movie, index) => (
-        <Container className="justify-content-center">
+        <Col className="m-3">
           <Col
-            className="image-container d-flex justify-content-center  m-3"
+            className="image-container d-flex justify-content-center"
             key={movie.imdbID}
           >
-            <img
-              src={movie.Poster}
-              alt="Movie Poster"
-              className="justify-content-start"
-            />
+            <img src={movie.Poster} alt="Movie Poster" />
 
             {/* Renders the overlay only if it was provided (needed for Checkout) */}
             {ItemComponent && (
@@ -28,15 +24,15 @@ const MovieIcon = (props) => {
             )}
           </Col>
 
-          <Col className="justify-content-start m-3 mt-5">
+          <Col className="justify-content-start m-0">
             <div className="text-center">
-              <h3 className="fw-bolder">
+              <h3 className="fw-bold">
                 {movie.Title} ({movie.Year})
               </h3>
-              <h4 className="fw-bolder text-warning">{movie.Genres}</h4>
+              <h4 className="text-warning">{movie.Genres}</h4>
             </div>
           </Col>
-        </Container>
+        </Col>
       ))}
     </>
   );
