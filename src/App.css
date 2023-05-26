@@ -80,3 +80,16 @@ body {
   padding: 20px;
   text-align: center;
 }
+
+.homepage-background {
+  background-image: url("/src/assets/wp1896112-3103121737.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  /* Add any additional background styles you want */
+}
+
+.homepage-background-color {
+  background-color: rgb(255, 255, 25, 0.25);
+  /* Adjust the opacity value (0.0 to 1.0) and the color as desired */
+}

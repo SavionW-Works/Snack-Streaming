@@ -29,10 +29,13 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-lg navbar-light ">
         <div className="container-fluid">
-          <div className="collapse navbar-collapse pt-3 px-3" id="navmenu">
-            <ul className="navbar-nav ms-auto d-flex align-items-center ">
+          <div
+            className="collapse navbar-collapse pt-3 px-3 bg-secondary"
+            id="navmenu"
+          >
+            <ul className="navbar-nav ms-auto d-flex align-items-center justify-content-between">
               <li className="nav-link navs">
                 <h3 className="navs">
                   <RouterLink
