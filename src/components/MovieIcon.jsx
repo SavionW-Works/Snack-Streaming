@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import cartData from "../data/cartData";
 const MovieIcon = (props) => {
   const ItemComponent = props.itemComponent;
   return (

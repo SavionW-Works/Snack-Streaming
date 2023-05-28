@@ -1,19 +1,28 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
-import cartItems from "../data/cartData";
+//import cartData from "../data/cartData";
 import MovieIcon from "./MovieIcon";
 import { useState, useEffect } from "react";
 
 const Checkout = () => {
   const [price, setPrice] = useState(0.0);
+
+  const [cartData, setCartData] = useState([]);
   const [favoriteGenres, setFavoriteGenres] = useState([]);
   var all_genres = {};
   var genre_accum = 0.25;
+  var total_genres = 24;
+  var cart_max = 10;
 
-  const PriceCalc = (cartItems) => {
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem("snack-streaming-cart"));
+    setCartData(cartItems || []);
+  }, []);
+
+  const PriceCalc = (cartData) => {
     //Iterates through cart items and adds genres to a dictionary with respective frequencies
-    cartItems.map((item) => {
+    cartData.map((item) => {
       var genre_list = item.Genres.split(/[\s,]+/);
 
       for (let i = 0; i < genre_list.length; i++) {
@@ -25,12 +34,46 @@ const Checkout = () => {
       }
     });
 
-    var num_movies = cartItems.length;
+    var num_movies = cartData.length;
+
+    //There are 24 different genres as follows:
+    /*[
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Film Noir",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Mystery",
+    "Romance",
+    "Sci-Fi",
+    "Short",
+    "Sport",
+    "Superhero",
+    "Thriller",
+    "War",
+    "Western"
+] */
 
     //Add $.30 for every different genre, and add a fraction of $2 for every genre:total ratio
     for (let genre in all_genres) {
       var price_copy = price;
-      setPrice(price_copy + genre_accum + (all_genres[genre] / num_movies) * 2);
+      //setPrice(price_copy + genre_accum + (all_genres[genre] / num_movies) * 2);
+      setPrice(
+        price_copy +
+          genre_accum +
+          (all_genres[genre] / total_genres) * 2 +
+          num_movies / cart_max
+      );
     }
 
     //console.log(price);
@@ -55,9 +98,10 @@ const Checkout = () => {
 
   //Starts filling up all_genres and calculates price when page mounts
   useEffect(() => {
-    PriceCalc(cartItems);
+    setPrice(0);
+    PriceCalc(cartData);
     findFavoriteGenre(all_genres);
-  }, [cartItems]); //When any values in the useEffect change, useEffect is called again
+  }, [cartData]); //When any values in the useEffect change, useEffect is called again
 
   return (
     <>
@@ -76,14 +120,14 @@ const Checkout = () => {
         <div className="ms-auto d-flex align-items-center">
           <h2>
             Cart (
-            {cartItems.length == 10 && (
+            {cartData.length == 10 && (
               <span className="text-warning fw-bold">
-                {cartItems.length}/{10}
+                {cartData.length}/{10}
               </span>
             )}
-            {cartItems.length < 10 && (
+            {cartData.length < 10 && (
               <>
-                {cartItems.length}/{10}
+                {cartData.length}/{10}
               </>
             )}
             )
@@ -91,7 +135,7 @@ const Checkout = () => {
         </div>
         <Container className="fluid movie-app">
           <Row className="">
-            <MovieIcon movies={cartItems}></MovieIcon>
+            <MovieIcon movies={cartData}></MovieIcon>
           </Row>
         </Container>
       </div>

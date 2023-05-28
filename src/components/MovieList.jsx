@@ -5,7 +5,7 @@ import axios from "axios";
 import SearchBox from "./Searchbox";
 import AddItem from "./AddItem";
 import RemoveItem from "./RemoveItem";
-import cartData from "../data/cartData";
+//import cartData from "../data/cartData";
 
 import "../App.css";
 import { Container, Row, Col } from "react-bootstrap";
@@ -16,7 +16,7 @@ const MovieList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [cartItems, setCartItems] = useState(cartData); //Limit to 10
+  const [cartItems, setCartItems] = useState([]); //Limit to 10
   const [movieData, setMovieData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [newSearch, setNewSearch] = useState("");
@@ -72,13 +72,16 @@ const MovieList = () => {
   };
 
   useEffect(() => {
-    fetchAPIData(searchValue);
-  }, [newSearch, page_num]); //When any values in the useEffect change, useEffect is called again
+    const movieCart = JSON.parse(localStorage.getItem("snack-streaming-cart"));
+
+    if (movieCart) {
+      setCartItems(movieCart);
+    }
+  }, []);
 
   useEffect(() => {
-    const newCartData = cartItems.map((item) => ({ ...item }));
-    Object.assign(cartData, newCartData);
-  }, [cartItems]);
+    fetchAPIData(searchValue);
+  }, [newSearch, page_num]); //When any values in the useEffect change, useEffect is called again
 
   //Smaller Functions
 
@@ -96,16 +99,20 @@ const MovieList = () => {
     }
 
     const newCartList = [...cartItems, movie]; //Adds movie parameter to a copy of cartItems
-    setCartItems(newCartList); //Updates cartList
+    setCartItems(newCartList); //Updates cartItems
+    saveToLocalStorage(newCartList); //saves to local storage
   };
 
   const removeNewItem = (movie) => {
     // const newListing = {};
     // newListing[movie.Title] = movie; //Gives each movie object a name equal to its title
+
     const newCartList = cartItems.filter(
       (item) => item.imdbID !== movie.imdbID
     ); //Removes movies that match a specified id a copy of cartItems
-    setCartItems(newCartList);
+
+    setCartItems(newCartList); //Updates cartItems
+    saveToLocalStorage(newCartList); //saves to local storage
   };
 
   //Advances page given needed params
@@ -114,6 +121,15 @@ const MovieList = () => {
       var copy = page_num;
       setPageNum(copy + direction);
     }
+  };
+
+  // useEffect(() => {
+  //   const newCartData = cartItems.map((item) => ({ ...item }));
+  //   Object.assign(cartData, newCartData);
+  // }, [cartItems, removeNewItem, addNewItem]);
+
+  const saveToLocalStorage = (cartItems) => {
+    localStorage.setItem("snack-streaming-cart", JSON.stringify(cartItems));
   };
 
   return (

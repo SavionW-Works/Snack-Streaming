@@ -1,3 +1,3 @@
-const cartItems = [];
+const cartData = [];
 
-export default cartItems;
+export default cartData;
