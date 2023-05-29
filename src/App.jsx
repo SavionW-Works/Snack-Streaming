@@ -1,19 +1,20 @@
 import { React, useContext } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import Signup from "./components/Signup";
+import Signup from "./components/Auth/Signup";
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import PrivateRoute from "./components/PrivateRoute";
-import ForgotPassword from "./components/ForgotPassword";
-import UpdateProfile from "./components/UpdateProfile";
+import Dashboard from "./components/Auth/Dashboard";
+import Login from "./components/Auth/Login";
+import PrivateRoute from "./contexts/PrivateRoute";
+import ForgotPassword from "./components/Auth/ForgotPassword";
+import UpdateProfile from "./components/Auth/UpdateProfile";
 import Homepage from "./components/Homepage";
 import MovieList from "./components/MovieList";
 import Header from "./components/Header";
 import Checkout from "./components/Checkout";
+import NavBar from "./components/navBar/navBar"
 
 /*               <PrivateRoute path="/update-profile" element={UpdateProfile} />
  */
@@ -24,7 +25,8 @@ function App() {
       <Container className="d-flex" style={{ minHeight: "100vh" }}>
         <div className="w-100" style={{ maxWidth: "400px" }}>
           <Router>
-            <Header></Header>
+            {/* <Header></Header> */}
+            <NavBar></NavBar>
             <AuthProvider>
               <Routes>
                 <Route path="/" element={<Homepage />} />
@@ -43,12 +45,19 @@ function App() {
                       <UpdateProfile />
                     </PrivateRoute>
                   }
-                ></Route>
+                >
+
+                </Route>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/movies" element={<MovieList />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/checkout" element={<PrivateRoute>
+                  <Checkout />
+
+                </PrivateRoute>} />
+
+                
               </Routes>
             </AuthProvider>
           </Router>
