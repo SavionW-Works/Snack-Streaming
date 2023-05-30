@@ -1,6 +1,5 @@
-import {Navbar,Nav,Container} from 'react-bootstrap';
-
-
+import { Navbar, Nav, Container } from "react-bootstrap";
+import "../../App.css";
 const NavBar = () => {
   return (
     <>
@@ -17,9 +16,8 @@ const NavBar = () => {
           </Nav>
         </Container>
       </Navbar>
-      
     </>
   );
-}
+};
 
 export default NavBar;

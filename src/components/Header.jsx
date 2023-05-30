@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchBox from "./Searchbox";
 import { NavLink as RouterLink, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../App.css";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -29,13 +30,13 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light ">
-        <div className="container-fluid">
+      <nav className="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div className="container-fluid ">
           <div
-            className="collapse navbar-collapse pt-3 px-3 bg-secondary"
+            className="collapse navbar-collapse pt-3 px-3 bg-secondary "
             id="navmenu"
           >
-            <ul className="navbar-nav ms-auto d-flex align-items-center justify-content-between">
+            <ul className="navbar-nav me-auto d-flex align-items-center justify-content-between ">
               <li className="nav-link navs">
                 <h3 className="navs">
                   <RouterLink
