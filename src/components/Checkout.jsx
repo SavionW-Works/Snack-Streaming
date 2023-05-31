@@ -13,7 +13,7 @@ const Checkout = () => {
   var all_genres = {};
   var genre_accum = 0.25;
   var total_genres = 24;
-  var cart_max = 10;
+  var cart_max = 14;
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("snack-streaming-cart"));
@@ -120,14 +120,14 @@ const Checkout = () => {
         <div className="ms-auto d-flex align-items-center">
           <h2>
             Cart (
-            {cartData.length == 10 && (
+            {cartData.length == cart_max && (
               <span className="text-warning fw-bold">
-                {cartData.length}/{10}
+                {cartData.length}/{cart_max}
               </span>
             )}
-            {cartData.length < 10 && (
+            {cartData.length < cart_max && (
               <>
-                {cartData.length}/{10}
+                {cartData.length}/{cart_max}
               </>
             )}
             )
@@ -143,7 +143,7 @@ const Checkout = () => {
       <div>
         <Container className="justify-content-center">
           <p className="display-3">
-            Total: <span className="text-warning">${price.toFixed(2)}</span>{" "}
+            Total: <span className="text-warning">${price.toFixed(2)}</span> per 2 Weeks
           </p>
 
           <p className="display-3">Your favorite genres are: </p>

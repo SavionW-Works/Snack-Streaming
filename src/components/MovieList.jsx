@@ -21,7 +21,8 @@ const MovieList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [newSearch, setNewSearch] = useState("");
   const [page_num, setPageNum] = useState(1);
-  const API_KEY = import.meta.env.VITE_APP_API_KEY; //How to use .env with Vite
+  const API_KEY = import.meta.env.VITE_APP_API_KEY; //How to use .env with Vite 
+  var cart_max = 14;
 
   const fetchGenreData = async (id) => {
     //How to use .env with Vite
@@ -87,7 +88,7 @@ const MovieList = () => {
 
   const addNewItem = (movie) => {
     //Checks if cart is at capacity
-    if (cartItems.length == 10) {
+    if (cartItems.length == cart_max) {
       return;
     }
 
@@ -220,14 +221,14 @@ const MovieList = () => {
         <div className="ms-auto d-flex align-items-center">
           <h2>
             Cart (
-            {cartItems.length == 10 && (
+            {cartItems.length == cart_max && (
               <span className="text-warning fw-bold">
                 {cartItems.length}/{10}
               </span>
             )}
-            {cartItems.length < 10 && (
+            {cartItems.length < cart_max && (
               <>
-                {cartItems.length}/{10}
+                {cartItems.length}/{cart_max}
               </>
             )}
             )
