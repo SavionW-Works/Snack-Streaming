@@ -233,7 +233,13 @@ const MovieList = () => {
             )}
             )
           </h2>
+        </div>  
+        <div className="container">
+        {!loading && cartItems.length == 0 && <h3 className="display-3 fw-bolder text-center p-6 justify-content-center">
+                  Cart Empty
+                </h3> }
         </div>
+        
         <Container className="fluid movie-app">
           <Row className="">
             <MovieIcon

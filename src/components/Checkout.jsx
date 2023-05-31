@@ -131,7 +131,12 @@ const Checkout = () => {
               </>
             )}
             )
-          </h2>
+          </h2> 
+        </div> 
+        <div className="container">
+        {cartData.length == 0 && <h3 className="display-3 fw-bolder text-center p-6 justify-content-center">
+                  Cart Empty
+                </h3> }
         </div>
         <Container className="fluid movie-app">
           <Row className="">
