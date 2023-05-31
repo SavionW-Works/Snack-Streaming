@@ -50,6 +50,30 @@ function Homepage() {
             </div>
           </Col>
         </Row>
+      </Container> 
+
+      <Container className="text-center pt-6">
+      <h1 className="title-text display-1 text-warning text-decoration-underline text-center fw-bold">
+          Why us?
+        </h1> 
+
+        <div className="py-4">
+          <p className="subtitle-text">Most streaming services are <span className="text-warning"> too much to swallow</span></p> 
+          <p className="fs-1">Consumers are paying for <span className="text-warning">MORE</span> than what they want</p> 
+          <p className="fs-1">Subscription rates are getting <span className="text-warning">HIGHER</span></p>  
+          <p className="fs-1">And you can't even share your password!</p>
+        </div> 
+
+        <div className="py-4">
+          <p className="subtitle-text">Snack Streaming is <span className="text-warning"> different</span></p> 
+          <p className="fs-1">Only pay for what <span className="text-warning">YOU</span> want</p> 
+          <p className="fs-1">Get <span className="text-warning">DISCOUNTS</span> on your subscription</p> 
+          <p className="fs-1">Delve into your <span className="text-warning">favorite</span> niche</p>   
+          <p className="fs-1">Or pick things <span className="text-warning">EVERYONE</span> in your house enjoys</p> 
+    
+        </div>
+        
+      
       </Container>
 
       <Container className="text-center pt-6">
